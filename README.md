@@ -13,7 +13,9 @@ The work has two published or in-progress outputs, and this repository supports 
 | Output | Status | Role |
 |---|---|---|
 | **Survey**: Sze & Brandão, "A Comprehensive Survey on Datasets for Affective Computing and Mental Disorder", *IEEE Transactions on Affective Computing*, 2025, DOI [10.1109/TAFFC.2025.3624354](https://doi.org/10.1109/TAFFC.2025.3624354) | Published | Its dataset taxonomy was used to justify the choice of DAIC-WOZ for this work. |
-| **Paper**: "Knowledge-guided Hybrid Graph Learning for Depression Detection" (Sze & Brandão) | **In development, not yet submitted or peer reviewed** | Presents the models and the auditability analysis in this repository. | Nothing here has been peer reviewed as a method. Numbers reported in the dissertation and in the draft may change before submission.|
+| **Paper**: "Knowledge-guided Hybrid Graph Learning for Depression Detection" (Sze & Brandão) | **In development, not yet submitted or peer reviewed** | Presents the models and the auditability analysis in this repository. | 
+
+Nothing here has been peer reviewed as a method. Numbers reported in the dissertation and in the draft may change before submission.
 
 ## Briefing
 
