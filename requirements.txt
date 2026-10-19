@@ -1,0 +1,5 @@
+# Colab already provides torch, numpy, pandas, scipy, scikit-learn and matplotlib.
+torch_geometric
+optuna
+empath
+pytest
