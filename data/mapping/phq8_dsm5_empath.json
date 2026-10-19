@@ -1,0 +1,107 @@
+{
+  "_description": "Hand-built mapping from the eight PHQ-8 criteria (DSM-5 major depressive disorder symptoms) to Empath lexical categories, with the expected direction of change in depressed participants. 'present' = category expected to increase (positive correlation with PHQ-8); 'absent' = category expected to decrease (negative correlation).",
+  "_source": "Transcribed unchanged from DSM5_MAP in legacy/X-Empath 2.ipynb, cell 7, lines 8-17. In the legacy code this map is used only for descriptive correlation analysis; it does not feed any model.",
+  "_references": [
+    {
+      "key": "apa2013dsm",
+      "citation": "American Psychiatric Association. Diagnostic and Statistical Manual of Mental Disorders, 5th ed. (DSM-5). Arlington, VA: American Psychiatric Publishing, 2013.",
+      "role": "Layer 1, clinical criteria. DSM-5 defines the nine symptom criteria of major depressive disorder. Each entry in 'criteria' is anchored to one of them."
+    },
+    {
+      "key": "fast2016empath",
+      "citation": "E. Fast, B. Chen, M. S. Bernstein. Empath: Understanding Topic Signals in Large-Scale Text. Proceedings of the CHI Conference on Human Factors in Computing Systems, 2016.",
+      "role": "Layer 2, lexicon validity. Empath categories cover affective, somatic and cognitive domains. They were generated from word embeddings, filtered by crowd workers, and validated against LIWC categories. This supports mapping DSM-5 criteria onto Empath categories."
+    },
+    {
+      "key": "pennebaker2015liwc",
+      "citation": "J. W. Pennebaker, R. L. Boyd, K. Jordan, K. Blackburn. The Development and Psychometric Properties of LIWC2015. Austin, TX: University of Texas at Austin, 2015.",
+      "role": "Layer 3, lexical-clinical tradition. The LIWC tradition holds that lexical categories capture measurable psychological states. Empath is not LIWC, but it shares the same theoretical basis."
+    }
+  ],
+  "_notes": [
+    "DSM-5 criterion A9 (suicidal ideation) is not mapped: PHQ-8 omits that item.",
+    "The 'phq8_item' field was added here and does not exist in the legacy code. It names the corresponding PHQ-8 column, as used in legacy/plotar.py lines 9-10.",
+    "Fourteen categories are absent from the standard Empath lexicon (empath 0.89, 194 categories). Empath does not raise an error for them: in the legacy code they score 0.0. See 'missing_from_empath'. The mapping is kept as written so that the gap stays visible.",
+    "No clinician has reviewed this mapping."
+  ],
+  "empath_version": "0.89",
+  "criteria": [
+    {
+      "id": "C1",
+      "label": "Depressed mood",
+      "label_pt": "Humor deprimido",
+      "phq8_item": "PHQ8_Depressed",
+      "present": ["sadness", "negative_emotion", "suffering", "pain", "torment", "grief", "fear", "nervousness", "anger"],
+      "absent": [],
+      "missing_from_empath": ["grief"]
+    },
+    {
+      "id": "C2",
+      "label": "Anhedonia",
+      "label_pt": "Anedonia",
+      "phq8_item": "PHQ8_NoInterest",
+      "present": [],
+      "absent": ["joy", "positive_emotion", "fun", "recreation", "play", "love", "affection", "celebration"],
+      "missing_from_empath": ["recreation"]
+    },
+    {
+      "id": "C3",
+      "label": "Appetite change",
+      "label_pt": "Apetite",
+      "phq8_item": "PHQ8_Appetite",
+      "present": ["eating", "food", "hunger", "disgust", "body"],
+      "absent": [],
+      "missing_from_empath": ["food", "hunger"]
+    },
+    {
+      "id": "C4",
+      "label": "Sleep disturbance",
+      "label_pt": "Sono",
+      "phq8_item": "PHQ8_Sleep",
+      "present": ["sleep", "fatigue", "health"],
+      "absent": [],
+      "missing_from_empath": ["fatigue"]
+    },
+    {
+      "id": "C5",
+      "label": "Fatigue or loss of energy",
+      "label_pt": "Fadiga",
+      "phq8_item": "PHQ8_Tired",
+      "present": ["fatigue", "weakness", "health", "tiredness"],
+      "absent": [],
+      "missing_from_empath": ["fatigue", "tiredness"]
+    },
+    {
+      "id": "C6",
+      "label": "Worthlessness or guilt",
+      "label_pt": "Desvalorização",
+      "phq8_item": "PHQ8_Failure",
+      "present": ["shame", "negative_emotion", "failure", "weakness"],
+      "absent": ["achievement", "success", "confidence"],
+      "missing_from_empath": ["failure", "success", "confidence"]
+    },
+    {
+      "id": "C7",
+      "label": "Diminished concentration",
+      "label_pt": "Concentração",
+      "phq8_item": "PHQ8_Concentrating",
+      "present": ["confusion", "cognitive_dissonance"],
+      "absent": ["cognitive_processes", "thinking", "reading"],
+      "missing_from_empath": ["cognitive_dissonance", "cognitive_processes", "thinking"]
+    },
+    {
+      "id": "C8",
+      "label": "Psychomotor retardation or agitation",
+      "label_pt": "Retardo/Agitação",
+      "phq8_item": "PHQ8_Moving",
+      "present": ["motion", "movement", "speed"],
+      "absent": [],
+      "missing_from_empath": ["motion", "speed"]
+    }
+  ],
+  "missing_from_empath": [
+    "grief", "recreation", "food", "hunger", "fatigue", "tiredness", "failure",
+    "success", "confidence", "cognitive_dissonance", "cognitive_processes", "thinking",
+    "motion", "speed"
+  ]
+}
