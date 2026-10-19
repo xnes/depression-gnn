@@ -1,0 +1,68 @@
+{
+  "InductGCN": {
+    "params": {
+      "lr": 0.0004059611610484307,
+      "weight_decay": 0.0005603803105930283,
+      "epochs": 450,
+      "m": 2.8736874205941256
+    },
+    "cv_pr_auc": 0.5189751790495908,
+    "n_trials": 30,
+    "space": "restricted"
+  },
+  "GAT text-only": {
+    "params": {
+      "lr": 0.0002051338263087451,
+      "weight_decay": 0.00010255552094216992,
+      "epochs": 300,
+      "m": 4.598528437324806
+    },
+    "cv_pr_auc": 0.4741225222555683,
+    "n_trials": 30,
+    "space": "restricted"
+  },
+  "GCN+GAT hybrid": {
+    "params": {
+      "lr": 0.0001155251689679663,
+      "weight_decay": 0.00019384322194510354,
+      "epochs": 550,
+      "m": 2.397750211381382
+    },
+    "cv_pr_auc": 0.4945119622000055,
+    "n_trials": 30,
+    "space": "restricted"
+  },
+  "EmpathGCN": {
+    "params": {
+      "lr": 0.0036313402466388546,
+      "weight_decay": 0.00011657077151761457,
+      "epochs": 350,
+      "m": 2.116585750006478
+    },
+    "cv_pr_auc": 0.6210225755275635,
+    "n_trials": 30,
+    "space": "restricted"
+  },
+  "GAT-GCN-FeExtr (Empath graph)": {
+    "params": {
+      "lr": 0.0030407178709186385,
+      "weight_decay": 8.810302346794737e-05,
+      "epochs": 600,
+      "m": 2.677641849102402
+    },
+    "cv_pr_auc": 0.5577355816528078,
+    "n_trials": 30,
+    "space": "restricted"
+  },
+  "GAT-GCN-FeExtr (word graph)": {
+    "params": {
+      "lr": 0.0001974679003863818,
+      "weight_decay": 0.00022601745015481687,
+      "epochs": 350,
+      "m": 4.4189410240621845
+    },
+    "cv_pr_auc": 0.4912585347964057,
+    "n_trials": 30,
+    "space": "restricted"
+  }
+}

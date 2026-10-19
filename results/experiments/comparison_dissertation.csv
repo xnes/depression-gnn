@@ -1,0 +1,7 @@
+,dissertation (dev-tuned),this run (train-CV tuned),this run 95% CI
+EmpathGCN,0.7413,0.6997,"[0.523, 0.857]"
+GAT text-only,0.7955,0.633,"[0.442, 0.785]"
+GAT-GCN-FeExtr (Empath graph),,0.505,"[0.353, 0.667]"
+GAT-GCN-FeExtr (word graph),0.8254,0.6159,"[0.431, 0.771]"
+GCN+GAT hybrid,0.7413,0.6278,"[0.442, 0.785]"
+InductGCN,0.6944,0.6278,"[0.442, 0.785]"

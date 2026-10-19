@@ -1,0 +1,13 @@
+model,cohort,n,positives,tau,F1 macro,F1 95% CI,recall,precision,specificity,ROC-AUC,PR-AUC,FN,FP
+EmpathGCN / DSM-5 mapping,pool (out-of-fold),140,42,0.47,0.6561,"[0.568, 0.735]",0.571,0.5,0.755,0.68,0.539,18,24
+EmpathGCN / DSM-5 mapping,daic_test,46,14,0.47,0.5965,"[0.440, 0.732]",0.714,0.417,0.562,0.688,0.455,4,14
+EmpathGCN / DSM-5 mapping,edaic,112,34,0.47,0.7083,"[0.608, 0.792]",0.735,0.543,0.731,0.78,0.58,9,21
+EmpathGCN / legacy domains,pool (out-of-fold),140,42,0.45,0.6415,"[0.552, 0.725]",0.595,0.472,0.714,0.679,0.533,17,28
+EmpathGCN / legacy domains,daic_test,46,14,0.45,0.5965,"[0.440, 0.732]",0.714,0.417,0.562,0.683,0.456,4,14
+EmpathGCN / legacy domains,edaic,112,34,0.45,0.6762,"[0.581, 0.761]",0.735,0.5,0.679,0.768,0.566,9,25
+GAT-GCN-FeExtr (Empath graph) / DSM-5 mapping,pool (out-of-fold),140,42,0.46,0.6277,"[0.541, 0.717]",0.548,0.46,0.724,0.689,0.548,19,27
+GAT-GCN-FeExtr (Empath graph) / DSM-5 mapping,daic_test,46,14,0.46,0.7262,"[0.589, 0.846]",0.857,0.545,0.688,0.792,0.536,2,10
+GAT-GCN-FeExtr (Empath graph) / DSM-5 mapping,edaic,112,34,0.46,0.6937,"[0.595, 0.786]",0.529,0.6,0.846,0.81,0.613,16,12
+GAT-GCN-FeExtr (Empath graph) / legacy domains,pool (out-of-fold),140,42,0.47,0.6415,"[0.552, 0.720]",0.595,0.472,0.714,0.674,0.54,17,28
+GAT-GCN-FeExtr (Empath graph) / legacy domains,daic_test,46,14,0.47,0.731,"[0.589, 0.847]",0.929,0.542,0.656,0.83,0.584,1,11
+GAT-GCN-FeExtr (Empath graph) / legacy domains,edaic,112,34,0.47,0.5557,"[0.454, 0.662]",0.206,0.538,0.923,0.751,0.573,27,6
