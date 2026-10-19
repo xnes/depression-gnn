@@ -1,0 +1,9 @@
+{
+  "n": 107,
+  "median_control": 0.007052186177715092,
+  "median_depressed": 0.007403859428367883,
+  "mannwhitney_U": 1102.0,
+  "mannwhitney_p_one_sided": 0.6446979777401205,
+  "spearman_rho_phq8": -0.05302837899134429,
+  "spearman_p": 0.5874954838307993
+}

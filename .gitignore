@@ -1,0 +1,10 @@
+﻿# Raw corpus data is under EULA and never enters the repository.
+data/raw/
+
+# Original Colab notebooks keep cell outputs that may contain transcript text.
+legacy/
+
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/

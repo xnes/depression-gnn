@@ -1,0 +1,9 @@
+,DAIC-WOZ train,DAIC-WOZ dev,E-DAIC
+PHQ8_NoInterest,1.138,1.0,1.247
+PHQ8_Depressed,1.292,1.44,1.59
+PHQ8_Sleep,1.398,2.202,1.857
+PHQ8_Tired,1.199,1.702,1.505
+PHQ8_Appetite,1.599,1.786,1.597
+PHQ8_Failure,1.386,1.345,1.581
+PHQ8_Concentrating,1.249,1.631,1.782
+PHQ8_Moving,0.67,0.905,1.096

@@ -1,0 +1,88 @@
+{
+  "InductGCN": {
+    "params": {
+      "hidden_dim": 24,
+      "dropout": 0.4038815457124282,
+      "lr": 0.00048786779970067266,
+      "weight_decay": 6.401043865640575e-05,
+      "epochs": 600,
+      "m": 4.2066913870654785,
+      "vocab_size": 150,
+      "window_size": 22
+    },
+    "cv_pr_auc": 0.5720995233435403,
+    "n_trials": 40
+  },
+  "GAT text-only": {
+    "params": {
+      "hidden_dim": 48,
+      "dropout": 0.5152586137650013,
+      "lr": 0.00012230323037398826,
+      "weight_decay": 0.003325476153892835,
+      "epochs": 350,
+      "m": 3.0361662809253303,
+      "heads": 2,
+      "vocab_size": 250,
+      "window_size": 15
+    },
+    "cv_pr_auc": 0.6407851409859485,
+    "n_trials": 40
+  },
+  "GCN+GAT hybrid": {
+    "params": {
+      "hidden_dim": 48,
+      "dropout": 0.5793264812604262,
+      "lr": 0.00022206640414735353,
+      "weight_decay": 0.00030522731024892007,
+      "epochs": 400,
+      "m": 4.453784661227229,
+      "heads": 2,
+      "vocab_size": 150,
+      "window_size": 15
+    },
+    "cv_pr_auc": 0.6674190216568584,
+    "n_trials": 40
+  },
+  "EmpathGCN": {
+    "params": {
+      "hidden_dim": 16,
+      "dropout": 0.49308945398845566,
+      "lr": 0.00956695418511678,
+      "weight_decay": 0.0001289784571838021,
+      "epochs": 550,
+      "m": 3.3882158759728203,
+      "n_categories": 100
+    },
+    "cv_pr_auc": 0.5425110551995221,
+    "n_trials": 40
+  },
+  "GAT-GCN-FeExtr (Empath graph)": {
+    "params": {
+      "hidden_dim": 32,
+      "dropout": 0.5529507436002349,
+      "lr": 0.00010590710720104725,
+      "weight_decay": 8.531100085994387e-05,
+      "epochs": 300,
+      "m": 2.274315421847997,
+      "heads": 2,
+      "n_categories": 194
+    },
+    "cv_pr_auc": 0.5994803088849339,
+    "n_trials": 40
+  },
+  "GAT-GCN-FeExtr (word graph)": {
+    "params": {
+      "hidden_dim": 24,
+      "dropout": 0.4730619941307532,
+      "lr": 0.00014010575308180003,
+      "weight_decay": 0.00020122463911382242,
+      "epochs": 300,
+      "m": 2.6873839121296164,
+      "heads": 4,
+      "vocab_size": 250,
+      "window_size": 20
+    },
+    "cv_pr_auc": 0.6275052527219652,
+    "n_trials": 40
+  }
+}

@@ -1,0 +1,13 @@
+model,cohort,n,positives,tau,F1 macro,F1 95% CI,recall,precision,specificity,ROC-AUC,FN,FP
+without temporal,daic_dev,33,12,0.52,0.5722,"[0.389, 0.727]",0.917,0.458,0.381,0.623,1,13
+without temporal,daic_test,46,14,0.52,0.5652,"[0.425, 0.706]",0.929,0.406,0.406,0.688,1,19
+without temporal,edaic,112,34,0.52,0.4242,"[0.333, 0.514]",0.971,0.347,0.205,0.643,1,62
+without paralinguistic,daic_dev,33,12,0.52,0.6002,"[0.429, 0.757]",1.0,0.48,0.381,0.782,0,13
+without paralinguistic,daic_test,46,14,0.52,0.4979,"[0.347, 0.631]",0.929,0.371,0.312,0.761,1,22
+without paralinguistic,edaic,112,34,0.52,0.3328,"[0.251, 0.420]",0.971,0.32,0.103,0.604,1,70
+without psycholinguistic,daic_dev,33,12,0.56,0.5875,"[0.406, 0.764]",0.25,0.75,0.952,0.643,9,1
+without psycholinguistic,daic_test,46,14,0.56,0.5461,"[0.395, 0.713]",0.143,1.0,1.0,0.783,12,0
+without psycholinguistic,edaic,112,34,0.56,0.5094,"[0.415, 0.604]",0.265,0.321,0.756,0.558,25,19
+all views,daic_dev,33,12,0.54,0.505,"[0.353, 0.667]",0.167,0.5,0.905,0.754,10,2
+all views,daic_test,46,14,0.54,0.6838,"[0.533, 0.817]",0.643,0.529,0.75,0.77,5,8
+all views,edaic,112,34,0.54,0.5389,"[0.435, 0.630]",0.618,0.362,0.526,0.613,13,37

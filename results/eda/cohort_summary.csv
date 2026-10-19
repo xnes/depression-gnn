@@ -1,0 +1,14 @@
+,DAIC-WOZ train,DAIC-WOZ dev,DAIC-WOZ test,E-DAIC
+labeled sessions,107,35,47,112
+sessions with transcript,107,33,46,112
+depressed (PHQ-8 >= 10),30 (28.0%),12 (36.4%),14 (30.4%),34 (30.4%)
+PHQ-8 mean (SD),6.4 (5.5),7.6 (6.7),7.1 (6.5),6.8 (6.5)
+item scores available,False,True,False,True
+Gender coded 0 / 1,44 / 63,17 / 16,24 / 22,n/a
+"participant turns, median [IQR]",146 [113-188],177 [121-231],166 [132-242],96 [76-120]
+"words, median [IQR]",1183 [781-1718],1389 [1049-1864],1419 [988-2140],1280 [856-1734]
+"speech minutes, median [IQR]",7 [4-9],7 [5-11],8 [6-10],11 [7-19]
+sessions with >= 1 tag (%),100.0,100.0,100.0,0.0
+"tags per 1k words, median",13.7,13.8,12.1,0.0
+"OOV vs train vocabulary, median (%)",n/a,6.8,6.6,8.3
+"ASR confidence, median",n/a,n/a,n/a,0.92
