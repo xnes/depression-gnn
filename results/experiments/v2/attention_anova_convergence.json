@@ -1,0 +1,16 @@
+{
+  "n_common_categories": 193,
+  "k": 20,
+  "shared": [
+    "neglect",
+    "health",
+    "timidity",
+    "occupation",
+    "masculine"
+  ],
+  "n_shared": 5,
+  "expected_by_chance": 2.07,
+  "p_overlap_hypergeometric": 0.03974832275987592,
+  "spearman_delta_vs_F": 0.102610370706693,
+  "spearman_p": 0.155607814892828
+}

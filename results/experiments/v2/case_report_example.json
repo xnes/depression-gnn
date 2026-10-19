@@ -1,0 +1,165 @@
+{
+  "participant": "anonymized test participant (true positive, median probability among true positives)",
+  "ensemble_probability": 0.753,
+  "threshold": 0.46,
+  "decision": "screen positive",
+  "n_true_positives": 12,
+  "ranking": "attention minus control mean (test cohort)",
+  "top_categories": [
+    {
+      "category": "medieval",
+      "attention": 0.01219,
+      "excess_over_control": 0.01037,
+      "control_mean": 0.00183,
+      "depressed_mean": 0.00087,
+      "above_depressed_mean": true,
+      "dsm5_mapping": ""
+    },
+    {
+      "category": "terrorism",
+      "attention": 0.00774,
+      "excess_over_control": 0.00687,
+      "control_mean": 0.00087,
+      "depressed_mean": 0.00055,
+      "above_depressed_mean": true,
+      "dsm5_mapping": ""
+    },
+    {
+      "category": "monster",
+      "attention": 0.00706,
+      "excess_over_control": 0.00683,
+      "control_mean": 0.00023,
+      "depressed_mean": 0.00113,
+      "above_depressed_mean": true,
+      "dsm5_mapping": ""
+    },
+    {
+      "category": "weapon",
+      "attention": 0.00837,
+      "excess_over_control": 0.00586,
+      "control_mean": 0.00251,
+      "depressed_mean": 0.00285,
+      "above_depressed_mean": true,
+      "dsm5_mapping": ""
+    },
+    {
+      "category": "envy",
+      "attention": 0.0079,
+      "excess_over_control": 0.00532,
+      "control_mean": 0.00258,
+      "depressed_mean": 0.00134,
+      "above_depressed_mean": true,
+      "dsm5_mapping": ""
+    },
+    {
+      "category": "deception",
+      "attention": 0.01014,
+      "excess_over_control": 0.00504,
+      "control_mean": 0.0051,
+      "depressed_mean": 0.00448,
+      "above_depressed_mean": true,
+      "dsm5_mapping": ""
+    },
+    {
+      "category": "negotiate",
+      "attention": 0.00692,
+      "excess_over_control": 0.00496,
+      "control_mean": 0.00195,
+      "depressed_mean": 0.00322,
+      "above_depressed_mean": true,
+      "dsm5_mapping": ""
+    },
+    {
+      "category": "fashion",
+      "attention": 0.00802,
+      "excess_over_control": 0.00485,
+      "control_mean": 0.00317,
+      "depressed_mean": 0.00271,
+      "above_depressed_mean": true,
+      "dsm5_mapping": ""
+    },
+    {
+      "category": "furniture",
+      "attention": 0.00723,
+      "excess_over_control": 0.00477,
+      "control_mean": 0.00246,
+      "depressed_mean": 0.00594,
+      "above_depressed_mean": true,
+      "dsm5_mapping": ""
+    },
+    {
+      "category": "dominant_heirarchical",
+      "attention": 0.007,
+      "excess_over_control": 0.00475,
+      "control_mean": 0.00226,
+      "depressed_mean": 0.00183,
+      "above_depressed_mean": true,
+      "dsm5_mapping": ""
+    }
+  ],
+  "dsm5_criteria": [
+    {
+      "feature": "dsm_C1",
+      "label": "Depressed mood",
+      "score": 0.00511,
+      "z_vs_control": 0.85,
+      "closer_to": "depressed"
+    },
+    {
+      "feature": "dsm_C2",
+      "label": "Anhedonia",
+      "score": -0.0032,
+      "z_vs_control": 0.9,
+      "closer_to": "depressed"
+    },
+    {
+      "feature": "dsm_C3",
+      "label": "Appetite change",
+      "score": 0.00117,
+      "z_vs_control": -0.35,
+      "closer_to": "depressed"
+    },
+    {
+      "feature": "dsm_C4",
+      "label": "Sleep disturbance",
+      "score": 0.0033,
+      "z_vs_control": 0.16,
+      "closer_to": "control"
+    },
+    {
+      "feature": "dsm_C5",
+      "label": "Fatigue or loss of energy",
+      "score": 0.00275,
+      "z_vs_control": 1.01,
+      "closer_to": "depressed"
+    },
+    {
+      "feature": "dsm_C6",
+      "label": "Worthlessness or guilt",
+      "score": 0.00703,
+      "z_vs_control": 1.21,
+      "closer_to": "depressed"
+    },
+    {
+      "feature": "dsm_C7",
+      "label": "Diminished concentration",
+      "score": -0.00066,
+      "z_vs_control": 0.28,
+      "closer_to": "depressed"
+    },
+    {
+      "feature": "dsm_C8",
+      "label": "Psychomotor retardation or agitation",
+      "score": 0.00461,
+      "z_vs_control": 1.14,
+      "closer_to": "control"
+    },
+    {
+      "feature": "absolutist_rate",
+      "label": "absolutist_rate",
+      "score": 0.00592,
+      "z_vs_control": -0.41,
+      "closer_to": "control"
+    }
+  ]
+}

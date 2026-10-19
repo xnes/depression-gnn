@@ -1,0 +1,21 @@
+rank_attention,category,attention_delta,anova_rank_train,in_anova_top_k,dsm5_mapping
+1,neglect,0.00542,3,True,
+2,health,0.0039,1,True,"C4+, C5+"
+3,morning,0.00349,177,False,
+4,furniture,0.00348,118,False,
+5,aggression,0.00301,108,False,
+6,play,0.00292,159,False,C2-
+7,gain,0.00286,100,False,
+8,timidity,0.00282,8,True,
+9,real_estate,0.00258,111,False,
+10,occupation,0.00256,4,True,
+11,masculine,0.00254,7,True,
+12,royalty,0.00242,179,False,
+13,ancient,0.00233,63,False,
+14,independence,0.00228,98,False,
+15,restaurant,0.00203,130,False,
+16,competing,0.00151,68,False,
+17,technology,0.00148,191,False,
+18,car,0.00141,56,False,
+19,messaging,0.00135,90,False,
+20,cheerfulness,0.00132,134,False,
