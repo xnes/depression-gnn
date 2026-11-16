@@ -118,7 +118,8 @@ def cohort_summary(table: pd.DataFrame) -> pd.DataFrame:
             "sessions with transcript": len(a),
             "depressed (PHQ-8 >= 10)": f"{int(a['PHQ8_Binary'].sum())} ({100 * a['PHQ8_Binary'].mean():.1f}%)",
             "PHQ-8 mean (SD)": f"{a['PHQ8_Score'].mean():.1f} ({a['PHQ8_Score'].std():.1f})",
-            "item scores available": bool(a[data.PHQ8_ITEMS].notna().all(axis=None)) if len(a) else False,
+            # Count rather than a boolean: one missing item would otherwise mark a whole cohort as False.
+            "sessions with all item scores": f"{int(a[data.PHQ8_ITEMS].notna().all(axis=1).sum())}/{len(a)}",
             "Gender coded 0 / 1": (f"{int((a['Gender'] == 0).sum())} / {int((a['Gender'] == 1).sum())}"
                                    if a["Gender"].notna().any() else "n/a"),
             "participant turns, median [IQR]": _iqr(a["n_turns"]),
