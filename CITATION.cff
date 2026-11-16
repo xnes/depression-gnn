@@ -1,29 +1,18 @@
 cff-version: 1.2.0
-message: >-
-  If you use this software, please cite the paper relevant to what you used
-  (graph model vs. interview-structure analysis). Both derive from the
-  dissertation listed below.
-title: >-
-  auditable-depression-gnn: Code and Reproducibility Materials
+message: If you use this software, please cite the dissertation below.
+title: "depression-gnn: auditable graph neural networks for depression detection"
 authors:
   - family-names: Sze
     given-names: Rodrigo Bessa
-    affiliation: >-
-      Programa de Pós-Graduação em Informática (PPGInf), PUC Minas
+    affiliation: Programa de Pós-Graduação em Informática (PPGINF), PUC Minas
+license: MIT
+repository-code: "https://github.com/xnes/depression-gnn"
 preferred-citation:
   type: thesis
-  title: >-
-    Representations of Major Depressive Disorder from Clinical Interview
-    Discourse
+  title: Representations of Major Depressive Disorder from Clinical Interview Discourse
   authors:
     - family-names: Sze
       given-names: Rodrigo Bessa
   institution:
     name: Pontifícia Universidade Católica de Minas Gerais (PUC Minas)
   year: 2026
-license: MIT
-repository-code: "TODO: add GitHub URL once repository is published"
-identifiers:
-  - type: doi
-    value: "TODO: add Zenodo DOI once minted"
-    description: Zenodo archival DOI for this repository

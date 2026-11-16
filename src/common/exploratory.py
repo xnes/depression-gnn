@@ -74,7 +74,88 @@ def criterion_direction(cohort, items: pd.DataFrame | None = None) -> pd.DataFra
     return pd.DataFrame(rows)
 
 
+def rank_biserial(x_dep: np.ndarray, x_ctrl: np.ndarray) -> tuple[float, float]:
+    """Rank-biserial effect size (depressed > control is positive) and two-sided Mann-Whitney p."""
+    x_dep, x_ctrl = x_dep[~np.isnan(x_dep)], x_ctrl[~np.isnan(x_ctrl)]
+    res = mannwhitneyu(x_dep, x_ctrl, alternative="two-sided")
+    return 2 * res.statistic / (len(x_dep) * len(x_ctrl)) - 1, float(res.pvalue)
+
+
+def criterion_contrast(features: pd.DataFrame, y: np.ndarray, items: pd.DataFrame) -> pd.DataFrame:
+    """Per DSM-5 criterion: class separation of the self-reported PHQ-8 item and of the language score.
+
+    features: criterion scores (dsm_C1..dsm_C8) indexed like `items`; y: binary labels in the same order.
+    The item effect is large by construction (the label is a sum of items); it is a ceiling, not a result.
+    """
+    rows = []
+    for crit in load_mapping()["criteria"]:
+        lang = features[f"dsm_{crit['id']}"].to_numpy(float)
+        item = items[crit["phq8_item"]].to_numpy(float)
+        r_lang, p_lang = rank_biserial(lang[y == 1], lang[y == 0])
+        r_item, p_item = rank_biserial(item[y == 1], item[y == 0])
+        rho, p_rho = spearmanr(lang, item, nan_policy="omit")
+        rows.append({"criterion": crit["id"], "label": crit["label"], "phq8_item": crit["phq8_item"],
+                     "r_item": r_item, "p_item": p_item, "r_language": r_lang, "p_language": p_lang,
+                     "gap": r_item - r_lang, "rho_language_item": rho, "p_rho": p_rho})
+    return pd.DataFrame(rows)
+
+
 # ----------------------------------------------------------------------------- figures
+
+ITEM_COLOR, LANGUAGE_COLOR = "#898781", "#6250d6"  # series identity, distinct from the class colors
+
+
+def fig_criterion_by_class(features: pd.DataFrame, y: np.ndarray, contrast: pd.DataFrame):
+    """Small multiples: language criterion score by class, one panel per DSM-5 criterion."""
+    import matplotlib.pyplot as plt
+    fig, axes = plt.subplots(2, 4, figsize=(11, 5.6), sharey=False)
+    for ax, (_, row) in zip(axes.ravel(), contrast.iterrows()):
+        x = features[f"dsm_{row['criterion']}"].to_numpy(float) * 1000
+        for cls in (0, 1):
+            ax.boxplot(x[y == cls], positions=[cls], widths=0.55, patch_artist=True, showfliers=False,
+                       boxprops=dict(facecolor=eda.CLASS_COLORS[cls], edgecolor=eda.INK, linewidth=0.8),
+                       medianprops=dict(color=eda.INK, linewidth=1.4),
+                       whiskerprops=dict(color=eda.INK, linewidth=0.8), capprops=dict(color=eda.INK, linewidth=0.8))
+        ax.set_xticks([0, 1], ["Ctrl", "Dep"], fontsize=8)
+        stars = "*" * sum(row["p_language"] < t for t in (0.05, 0.01, 0.001))
+        # Statistics go in the title block so they never collide with the whiskers.
+        ax.set_title(f"{row['criterion']} {row['label']}\n"
+                     f"r = {row['r_language']:.2f}{stars}   rho(item) = {row['rho_language_item']:.2f}",
+                     fontsize=8, color=eda.INK)
+        ax.tick_params(labelsize=7)
+        for side in ("top", "right"):
+            ax.spines[side].set_visible(False)
+    for ax in axes[:, 0]:
+        ax.set_ylabel("criterion score (x 1000)", fontsize=8, color=eda.INK)
+    fig.tight_layout()
+    return fig
+
+
+def fig_report_vs_discourse(contrast: pd.DataFrame):
+    """Dumbbell: class separation of the self-reported item vs. the language score, per criterion."""
+    import matplotlib.pyplot as plt
+    t = contrast.iloc[::-1]
+    ypos = np.arange(len(t))
+    fig, ax = plt.subplots(figsize=(6.5, 3.6))
+    ax.hlines(ypos, t["r_language"], t["r_item"], color="#c3c2b7", linewidth=2, zorder=1)
+    ax.scatter(t["r_item"], ypos, s=60, color=ITEM_COLOR, edgecolors="white", linewidths=1.5, zorder=2,
+               label="PHQ-8 item (self-report)")
+    ax.scatter(t["r_language"], ypos, s=60, color=LANGUAGE_COLOR, edgecolors="white", linewidths=1.5, zorder=3,
+               label="Language score (Empath)")
+    for yp, (_, row) in zip(ypos, t.iterrows()):
+        if row["p_language"] < 0.05:
+            ax.text(row["r_language"], yp + 0.28, "*", ha="center", fontsize=10, color=eda.INK)
+    ax.axvline(0, color=eda.MUTED, linewidth=0.8)
+    ax.set_yticks(ypos, [f"{r['criterion']} {r['label']}" for _, r in t.iterrows()], fontsize=8)
+    ax.set_xlabel("class separation, rank-biserial r (depressed vs. control)", color=eda.INK)
+    ax.set_xlim(-0.3, 1.0)
+    for side in ("top", "right"):
+        ax.spines[side].set_visible(False)
+    # Legend above the plot area so it never covers a criterion row.
+    ax.legend(frameon=False, loc="lower center", bbox_to_anchor=(0.5, 1.0), ncol=2, fontsize=8)
+    fig.tight_layout()
+    return fig
+
 
 def fig_empath_anova(anova: pd.DataFrame, top: int = 20):
     import matplotlib.pyplot as plt

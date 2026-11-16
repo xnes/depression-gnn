@@ -1,68 +1,85 @@
 # Auditable Depression Graph Neural Network
-Graph neural networks for detecting depression in clinical interview transcripts (DAIC-WOZ, E-DAIC), built on an inspectable PHQ-8/DSM-5 to Empath mapping with no LLM in feature extraction. Includes per-case audit reports of criteria, categories and matched terms. Research code, not a diagnostic tool.
 
-## Master's dissertation repository
+Graph neural networks for detecting depression from clinical interview transcripts (DAIC-WOZ,
+E-DAIC), built only on inspectable sources: lexical statistics, timestamps, transcribed
+paralinguistic tags, and an explicit mapping of the PHQ-8 criteria (DSM-5) to Empath lexical
+categories. No large language model is used anywhere in feature extraction. Research code, not a
+diagnostic tool.
 
-This is the code behind a master's dissertation in Computer Science at the Graduate Program in Informatics (PPGINF), Pontifícia Universidade Católica de Minas Gerais (PUC Minas):
+This repository accompanies the master's dissertation
 
 > R. B. Sze, *Representations of Major Depressive Disorder from Clinical Interview Discourse*,
-> master's dissertation, PUC Minas, 2026. Advisor: Prof. Wladmir Cardoso Brandão.
+> master's dissertation, PPGINF, PUC Minas, 2026. Advisor: Prof. Wladmir Cardoso Brandão.
 
-The work has two published or in-progress outputs, and this repository supports both:
+and the paper "Knowledge-guided Hybrid Graph Learning for Depression Detection" (Sze and Brandão),
+which is in preparation and has not been peer reviewed.
 
-| Output | Status | Role |
-|---|---|---|
-| **Survey**: Sze & Brandão, "A Comprehensive Survey on Datasets for Affective Computing and Mental Disorder", *IEEE Transactions on Affective Computing*, 2025, DOI [10.1109/TAFFC.2025.3624354](https://doi.org/10.1109/TAFFC.2025.3624354) | Published | Its dataset taxonomy was used to justify the choice of DAIC-WOZ for this work. |
-| **Paper**: "Knowledge-guided Hybrid Graph Learning for Depression Detection" (Sze & Brandão) | **In development, not yet submitted or peer reviewed** | Presents the models and the auditability analysis in this repository. | 
+## Method in brief
 
-Nothing here has been peer reviewed as a method. Numbers reported in the dissertation and in the draft may change before submission.
+- **Mapping.** [`data/mapping/phq8_dsm5_empath.json`](data/mapping/phq8_dsm5_empath.json) links
+  each PHQ-8 criterion to Empath categories with an expected direction of change
+  ([description](data/mapping/phq8_dsm5_empath.md)). It yields one score per criterion, used to read
+  the evidence behind each prediction. The graph itself is data-driven.
+- **Graphs.** A word graph (TF-IDF, windowed PPMI) and a graph of Empath categories selected by
+  ANOVA on the training data. New participants are added inductively.
+- **Models.** InductGCN (lexical baseline), EmpathGCN, and GAT-GCN-FeExtr, a graph-attention model
+  that also receives temporal, paralinguistic, and criterion-score features.
+- **Protocol.** DAIC-WOZ train and dev form a training pool of 140 participants. Hyperparameters and
+  the decision threshold are chosen by cross-validation inside the pool. A cross-fitted ensemble of
+  20 models is scored once on the DAIC-WOZ test partition (46) and on E-DAIC (112, excluding
+  sessions shared with DAIC-WOZ training).
+- Only participant speech is used; interviewer turns contribute timestamps only.
 
-## Briefing
+## Limitations
 
-Recent systems often reach strong benchmark scores by using a large language model to extract psychological features from text. That swaps one black box for another and leaves a clinician unable to see why a case was flagged. This project takes the opposite design choice:
-
-- The eight PHQ-8 criteria (derived from the DSM-5) are mapped by hand to Empath lexical categories, with an expected direction of change in depressed participants. The mapping is a plain JSON file: [`data/mapping/phq8_dsm5_empath.json`](data/mapping/phq8_dsm5_empath.json).
-- Three graph architectures isolate each component: a lexical graph baseline (InductGCN), a graph over Empath categories (EmpathGCN), and a graph-attention model with temporal and paralinguistic features (GAT-GCN-FeExtr), the last trained as an ensemble of 20 models.
-- Training uses an asymmetric loss and a threshold constrained by a maximum number of false positives, because a missed case costs more than a false alarm in screening.
-- A per-case audit report lists the criteria, categories, matched terms, and sentences behind a result. See [`docs/AUDITABILITY.md`](docs/AUDITABILITY.md).
-
-## Status and limitations
-Read these before relying on anything here.
-
-- **Development-set results are optimistic.** The class-weight multiplier, decision threshold, hyperparameters, and random seed were selected on the DAIC-WOZ development set, where results are also reported. The cross-corpus E-DAIC evaluation is the less biased evidence.
-- **Small samples.** The development set has 35 sessions (12 depressed).
-- **E-DAIC transcripts come from automatic speech recognition**, which lowers text quality and is one factor in the drop from DAIC-WOZ to E-DAIC.
-- **Mapping coverage gap.** 14 categories named in the mapping do not exist in the standard Empath lexicon and silently score zero. `tests/test_mapping.py` documents this. An optional extended mode uses proposed term lists that have not been clinically reviewed.
-- **Text only.** No audio or video signal is used.
-- **No clinical validation.** No psychologist has evaluated the audit reports. The scores describe
-  vocabulary, not a person's clinical state.
-- Higher scores have been reported by other systems that rely on LLM-extracted features and
-  synthetic training data. This project does not try to match them by that route.
+- Small evaluation cohorts; confidence intervals are wide and model differences are not significant.
+- E-DAIC transcripts come from automatic speech recognition and carry no paralinguistic tags.
+- 14 categories named in the mapping do not exist in Empath 0.89; they are excluded from criterion
+  scores.
+- Labels are PHQ-8 self-reports (a screening instrument), not clinical diagnoses. No clinician has
+  evaluated the mapping or the audit reports.
 
 ## Data
-DAIC-WOZ and E-DAIC are distributed by USC ICT under an End User License Agreement and are **not
-included**. See [`DATA_ACCESS.md`](DATA_ACCESS.md). Anything under `data/processed/` and `results/`
-is derived and does not allow reconstruction of transcripts.
 
-## Repository layout
+DAIC-WOZ and E-DAIC are distributed by USC ICT under an End User License Agreement that prohibits
+redistribution, and are **not included**. Request access from USC ICT
+(https://dcapswoz.ict.usc.edu/), then point the environment variable `DAIC_DATA_DIR` to the
+corpora, with the layout described in [`src/common/data.py`](src/common/data.py).
+
+Everything under `results/` is aggregate (counts, statistics, metrics, figures) and does not allow
+the reconstruction of transcripts or the identification of participants.
+
+## Reproducing
+
+Both notebooks run in Google Colab with Google Drive mounted; edit the paths in their setup cell.
+
+1. [`notebooks/01_dataset_eda.ipynb`](notebooks/01_dataset_eda.ipynb): cohort characterization and
+   exploratory analyses, written to `results/eda/`.
+2. [`notebooks/02_experiments.ipynb`](notebooks/02_experiments.ipynb) (GPU recommended): tuning,
+   ensembles, and evaluation, written to `results/experiments/v2/`. Per-participant probabilities
+   and attention go to an output directory outside the repository.
+3. Paired comparisons and auditability analyses, from that output directory:
+
+```bash
+pip install -r requirements.txt
+PYTHONPATH=. python scripts/paired_auc.py <OUTPUT_DIR> results/experiments/v2
+PYTHONPATH=. python scripts/auditability.py <OUTPUT_DIR> results/experiments/v2
+PYTHONPATH=. python -m pytest -q tests
+```
+
+## Layout
 
 ```
-data/mapping/        PHQ-8/DSM-5 to Empath mapping (JSON)
-src/common/          preprocessing, feature extraction, evaluation, auditability
-src/paper1_graph_model/   graph construction and the three architectures
-notebooks/           exploratory analysis and experiments
-papers/paper1_taffc/ manuscript draft and reproducibility checklist
-docs/                auditability notes
-tests/               integrity checks for the mapping and report code
+data/mapping/            PHQ-8/DSM-5 to Empath mapping and its description
+src/common/              data loading, features, evaluation, exploratory analysis
+src/paper1_graph_model/  graph construction, models, experiment protocol
+scripts/                 paired bootstrap and auditability analyses
+notebooks/               01 exploration, 02 experiments (with outputs)
+results/                 aggregate results and figures
+tests/                   unit tests
 ```
-
-Several notebooks and modules are still placeholders while code is being ported from the original
-Colab notebooks. [`papers/paper1_taffc/reproducibility_checklist.md`](papers/paper1_taffc/reproducibility_checklist.md)
-tracks what is done.
 
 ## Citation
-
-If you use this code, cite the dissertation, and the survey if you use its taxonomy:
 
 ```bibtex
 @mastersthesis{sze2026representations,
@@ -71,22 +88,10 @@ If you use this code, cite the dissertation, and the survey if you use its taxon
   school = {Pontif\'icia Universidade Cat\'olica de Minas Gerais},
   year   = {2026}
 }
-
-@article{sze2025survey,
-  author  = {Sze, Rodrigo Bessa and Brand{\~a}o, Wladmir Cardoso},
-  title   = {A Comprehensive Survey on Datasets for Affective Computing and Mental Disorder},
-  journal = {IEEE Transactions on Affective Computing},
-  year    = {2025},
-  doi     = {10.1109/TAFFC.2025.3624354}
-}
 ```
 
-A citation for the paper will be added once it is available. See also [`CITATION.cff`](CITATION.cff).
+See also [`CITATION.cff`](CITATION.cff).
 
 ## License
 
-Code is released under the MIT License ([`LICENSE`](LICENSE)). The license covers code only, not
-DAIC-WOZ or E-DAIC data.
-
-
-Rodrigo Bessa Sze, PPGINF, PUC Minas. rodrigo.sze@gmail.com
+MIT ([`LICENSE`](LICENSE)). The license covers the code only, not DAIC-WOZ or E-DAIC data.
