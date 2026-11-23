@@ -36,13 +36,14 @@ TAG_GROUPS = {
                    "<mutters>", "<mumbling>"],
 }
 
-# Al-Mosaiwi and Johnstone (2018), as listed in legacy/feature_extraction.py.
+# Al-Mosaiwi and Johnstone (2018), 19-word dictionary, Table S2 of the supplemental material.
+# Function words without valence. The index is occurrences / participant words, whole words,
+# case-insensitive. The original study also discounts false positives (negation, qualifiers, and
+# greetings, e.g. "not always", "almost all", "all right"); that discount is not implemented here.
 ABSOLUTIST_TERMS = [
-    "always", "never", "everything", "nothing", "nobody", "everyone", "everybody", "no one",
-    "completely", "totally", "absolutely", "utterly", "entire", "entirely", "forever",
-    "impossible", "perfect", "awful", "terrible", "disastrous", "worst", "best", "ruined",
-    "hopeless", "worthless", "helpless", "pointless", "definite", "undeniable", "unquestionable",
-    "clearly", "obviously", "definitely", "undoubtedly", "none", "nowhere", "nor", "zero", "can't",
+    "absolutely", "all", "always", "complete", "completely", "constant", "constantly",
+    "definitely", "entire", "ever", "every", "everyone", "everything", "full", "must", "never",
+    "nothing", "totally", "whole",
 ]
 
 # Legacy EmpathGCN domain groups (legacy/Empath_GCN_Hybrid.ipynb, cell 12). Kept for ablation.
@@ -159,6 +160,10 @@ def domain_scores(empath: dict[str, float], groups: dict = EMPATH_DOMAIN_GROUPS)
 
 
 def absolutist_rate(text: str) -> float:
+    """Absolutist words / words, after lowercasing and removing transcript tags.
+
+    Whole words only: "all" does not match "allowance", "every" does not match "everyone".
+    """
     cleaned = clean_text(text)
     n_words = len(_WORD.findall(cleaned))
     return len(_ABSOLUTIST.findall(cleaned)) / n_words if n_words else 0.0
