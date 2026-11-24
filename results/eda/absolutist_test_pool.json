@@ -1,0 +1,18 @@
+{
+  "cohort": "DAIC-WOZ train + dev (training pool)",
+  "dictionary": "Al-Mosaiwi and Johnstone (2018), 19 words",
+  "n": 140,
+  "n_depressed": 42,
+  "n_control": 98,
+  "unit": "absolutist words per 1,000 participant words",
+  "mean_depressed": 9.177604659455579,
+  "mean_control": 8.590724176532348,
+  "median_depressed": 9.201562332435895,
+  "median_control": 7.9006559411425785,
+  "mannwhitney_U": 2281.0,
+  "mannwhitney_p_one_sided": 0.15582763941860622,
+  "alternative": "depressed > control",
+  "rank_biserial_r": 0.10835762876579214,
+  "spearman_rho_phq8": 0.04786843192732301,
+  "spearman_p": 0.5743673775987073
+}
