@@ -8,7 +8,8 @@ in the original Colab notebooks):
     DAIC-WOZ/oracle/dev_split_Depression_AVEC2017.csv
     DAIC-WOZ/oracle/full_test_split.csv
     DAIC-WOZ/transcripts/<id>_TRANSCRIPT.csv      tab-separated: start_time, stop_time, speaker, value
-    E-DAIC/labels/Detailed_PHQ8_Labels.csv
+    E-DAIC/labels/{train,dev,test}_split.csv      official AVEC 2019 splits (275 labeled participants)
+    E-DAIC/labels/detailed_lables.csv             PHQ-8 item scores for all 275 (file name as released)
     E-DAIC/data/<id>_Transcript.csv               comma-separated, ASR output with a Text column
 
 Functions here return labels and participant turns only. Interviewer turns are dropped on load.
@@ -35,6 +36,15 @@ DAIC_SPLIT_FILES = {
 # DAIC-WOZ documentation: these sessions lack the interviewer (Ellie) turns.
 INCOMPLETE_SESSIONS = frozenset({451, 458, 480})
 SYNC_MARKERS = frozenset({"<synch>", "<sync>", "[sync]"})
+
+EDAIC_SPLIT_FILES = {"train": "train_split.csv", "dev": "dev_split.csv", "test": "test_split.csv"}
+EDAIC_ITEMS_FILE = "detailed_lables.csv"
+_EDAIC_ITEM_COLUMNS = {
+    "PHQ8_1_NoInterest": "PHQ8_NoInterest", "PHQ8_2_Depressed": "PHQ8_Depressed",
+    "PHQ8_3_Sleep": "PHQ8_Sleep", "PHQ8_4_Tired": "PHQ8_Tired", "PHQ8_5_Appetite": "PHQ8_Appetite",
+    "PHQ8_6_Failure": "PHQ8_Failure", "PHQ8_7_Concentration": "PHQ8_Concentrating",
+    "PHQ8_8_Psychomotor": "PHQ8_Moving",
+}
 
 TURN_COLUMNS = ["start", "end", "text"]
 
@@ -116,7 +126,45 @@ def load_edaic_session(root: Path, participant_id: int) -> pd.DataFrame | None:
 
 
 def load_edaic_labels(root: Path) -> pd.DataFrame:
-    return normalize_label_columns(pd.read_csv(root / "E-DAIC" / "labels" / "Detailed_PHQ8_Labels.csv"))
+    """All labeled E-DAIC participants (official train, dev and test splits), with a 'split' column.
+
+    The binary label is recomputed from the PHQ-8 total (>= 10): the released PHQ_Binary column marks
+    some participants with totals of 10-16 as negative, which contradicts the cutoff used throughout.
+    Item scores come from the detailed label file when it is present.
+    """
+    labels = root / "E-DAIC" / "labels"
+    frames = []
+    for split, name in EDAIC_SPLIT_FILES.items():
+        # Gender is coded as text here and 0/1 in DAIC-WOZ with no documented correspondence; dropped.
+        df = pd.read_csv(labels / name).drop(columns=["PHQ_Binary", "PHQ8_Binary"], errors="ignore")
+        df = normalize_label_columns(df)[["Participant_ID", "PHQ8_Score", "PHQ8_Binary"]]
+        frames.append(df.assign(split=split))
+    out = pd.concat(frames, ignore_index=True)
+    if (labels / EDAIC_ITEMS_FILE).exists():
+        items = pd.read_csv(labels / EDAIC_ITEMS_FILE).rename(
+            columns={"Participant": "Participant_ID", **_EDAIC_ITEM_COLUMNS})
+        out = out.merge(items[["Participant_ID", *PHQ8_ITEMS]], on="Participant_ID", how="left")
+    return out
+
+
+def external_edaic_labels(daic: pd.DataFrame, edaic: pd.DataFrame) -> pd.DataFrame:
+    """E-DAIC participants whose ID appears in no DAIC-WOZ split (train, dev or test).
+
+    E-DAIC re-releases every DAIC-WOZ session with an ASR transcript. Excluding only the DAIC-WOZ
+    training split would leave development participants (part of the training pool) and test
+    participants (already scored on DAIC-WOZ) in the external cohort.
+    """
+    return edaic[~edaic["Participant_ID"].isin(set(daic["Participant_ID"]))].reset_index(drop=True)
+
+
+def asr_daic_test_labels(daic: pd.DataFrame, edaic: pd.DataFrame) -> pd.DataFrame:
+    """DAIC-WOZ test participants that E-DAIC re-releases, with DAIC-WOZ labels.
+
+    For the controlled transcription analysis only: same participants and interviews as the DAIC-WOZ
+    test partition, scored on the E-DAIC ASR transcript. Never part of the external evaluation.
+    """
+    test = daic[daic["split"] == "test"]
+    return test[test["Participant_ID"].isin(set(edaic["Participant_ID"]))].reset_index(drop=True)
 
 
 def load_edaic_turns(root: Path, participant_id: int) -> pd.DataFrame | None:

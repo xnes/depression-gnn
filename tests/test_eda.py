@@ -47,12 +47,16 @@ def root(tmp_path: Path) -> Path:
     for pid in (300, 301, 302, 303, 451):
         _daic_transcript(transcripts / f"{pid}_TRANSCRIPT.csv", "i sleep badly most nights")
 
-    e_items = {f"PHQ_8{i.removeprefix('PHQ8_')}": 2 for i in data.PHQ8_ITEMS}
     pd.DataFrame([
-        {"Participant_ID": 300, "PHQ_8Total": 3, **e_items},   # in DAIC-WOZ train: excluded
-        {"Participant_ID": 600, "PHQ_8Total": 16, **e_items},
-        {"Participant_ID": 601, "PHQ_8Total": 4, **e_items},
-    ]).to_csv(labels_e / "Detailed_PHQ8_Labels.csv", index=False)
+        {"Participant_ID": 300, "Gender": "male", "PHQ_Binary": 0, "PHQ_Score": 3},  # in DAIC-WOZ: excluded
+        {"Participant_ID": 600, "Gender": "female", "PHQ_Binary": 1, "PHQ_Score": 16},
+    ]).to_csv(labels_e / data.EDAIC_SPLIT_FILES["train"], index=False)
+    pd.DataFrame(columns=["Participant_ID", "Gender", "PHQ_Binary", "PHQ_Score"]).to_csv(
+        labels_e / data.EDAIC_SPLIT_FILES["dev"], index=False)
+    pd.DataFrame([{"Participant_ID": 601, "Gender": "male", "PHQ_Binary": 0, "PHQ_Score": 4}]).to_csv(
+        labels_e / data.EDAIC_SPLIT_FILES["test"], index=False)
+    pd.DataFrame([{"Participant": p, **{c: 2 for c in data._EDAIC_ITEM_COLUMNS}} for p in (300, 600, 601)]).to_csv(
+        labels_e / data.EDAIC_ITEMS_FILE, index=False)
     for pid in (300, 600):
         pd.DataFrame({"Start_Time": [0.0, 3.0], "End_Time": [2.0, 5.0],
                       "Text": ["i feel tired every day", f"unknownword {SECRET_WORD}"],

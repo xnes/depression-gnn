@@ -274,6 +274,16 @@ def run_final(spec: ModelSpec, hp: dict, pool: Cohort, cohorts: list[Cohort], n_
     }
 
 
+def score_cohort(result: dict, spec: ModelSpec, cohort: Cohort, device=None) -> dict:
+    """Score one more cohort with a finished ensemble, at its already calibrated threshold.
+
+    Used for the controlled transcription analysis, which must not enter result["metrics"].
+    """
+    device = device or torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    probs = np.mean([m.predict(spec, cohort, device) for m in result["members"]], axis=0)
+    return {"probs": probs, "metrics": evaluate(cohort.y, probs, result["tau"])}
+
+
 @torch.no_grad()
 def attention_to_vocabulary(result: dict, spec: ModelSpec, cohort: Cohort, device=None) -> pd.DataFrame:
     """Mean second-layer attention from each vocabulary node to each document of `cohort`.
