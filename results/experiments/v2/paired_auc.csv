@@ -1,13 +1,19 @@
 cohort,model,AUC,AUC 95% CI,delta vs reference,delta 95% CI,P(reference not better)
-daic_test,GAT-GCN-FeExtr (Empath graph),0.812,"[0.673, 0.927]",,,
-daic_test,EmpathGCN,0.699,"[0.533, 0.842]",0.114,"[-0.032, +0.278]",0.056
-daic_test,InductGCN,0.65,"[0.461, 0.821]",0.163,"[-0.016, +0.342]",0.037
-daic_test,GAT text-only,0.636,"[0.455, 0.802]",0.176,"[+0.006, +0.348]",0.024
-daic_test,GCN+GAT hybrid,0.658,"[0.482, 0.822]",0.154,"[+0.000, +0.315]",0.026
-daic_test,GAT-GCN-FeExtr (word graph),0.674,"[0.498, 0.841]",0.138,"[-0.015, +0.295]",0.039
-edaic,GAT-GCN-FeExtr (Empath graph),0.81,"[0.721, 0.887]",,,
-edaic,EmpathGCN,0.783,"[0.690, 0.863]",0.027,"[-0.052, +0.109]",0.259
-edaic,InductGCN,0.758,"[0.656, 0.851]",0.051,"[-0.040, +0.146]",0.141
-edaic,GAT text-only,0.744,"[0.638, 0.843]",0.066,"[-0.029, +0.166]",0.091
-edaic,GCN+GAT hybrid,0.765,"[0.668, 0.855]",0.044,"[-0.044, +0.136]",0.176
-edaic,GAT-GCN-FeExtr (word graph),0.77,"[0.672, 0.861]",0.04,"[-0.048, +0.134]",0.205
+daic_test,GAT-GCN-FeExtr (Empath graph),0.815,"[0.679, 0.931]",,,
+daic_test,EmpathGCN,0.69,"[0.520, 0.833]",0.125,"[-0.022, +0.294]",0.044
+daic_test,InductGCN,0.65,"[0.461, 0.821]",0.165,"[-0.016, +0.348]",0.035
+daic_test,GAT text-only,0.636,"[0.455, 0.802]",0.179,"[+0.007, +0.353]",0.023
+daic_test,GCN+GAT hybrid,0.658,"[0.482, 0.822]",0.156,"[+0.002, +0.321]",0.025
+daic_test,GAT-GCN-FeExtr (word graph),0.674,"[0.498, 0.841]",0.141,"[-0.015, +0.300]",0.037
+edaic,GAT-GCN-FeExtr (Empath graph),0.72,"[0.591, 0.832]",,,
+edaic,EmpathGCN,0.62,"[0.491, 0.743]",0.1,"[-0.003, +0.202]",0.029
+edaic,InductGCN,0.545,"[0.417, 0.675]",0.175,"[+0.054, +0.296]",0.005
+edaic,GAT text-only,0.52,"[0.389, 0.653]",0.2,"[+0.083, +0.323]",0.002
+edaic,GCN+GAT hybrid,0.546,"[0.416, 0.676]",0.174,"[+0.060, +0.296]",0.004
+edaic,GAT-GCN-FeExtr (word graph),0.56,"[0.428, 0.689]",0.16,"[+0.032, +0.287]",0.009
+edaic_test,GAT-GCN-FeExtr (Empath graph),0.722,"[0.574, 0.855]",,,
+edaic_test,EmpathGCN,0.669,"[0.510, 0.814]",0.053,"[-0.049, +0.159]",0.158
+edaic_test,InductGCN,0.589,"[0.429, 0.736]",0.133,"[-0.027, +0.299]",0.047
+edaic_test,GAT text-only,0.577,"[0.417, 0.728]",0.146,"[-0.007, +0.309]",0.035
+edaic_test,GCN+GAT hybrid,0.599,"[0.441, 0.749]",0.124,"[-0.031, +0.286]",0.053
+edaic_test,GAT-GCN-FeExtr (word graph),0.615,"[0.456, 0.762]",0.107,"[-0.054, +0.275]",0.085

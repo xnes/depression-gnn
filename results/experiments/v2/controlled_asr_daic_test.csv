@@ -1,0 +1,7 @@
+model,cohort,n,positives,tau,F1 macro,F1 95% CI,recall,precision,specificity,ROC-AUC,PR-AUC,FN,FP
+InductGCN,asr_daic_test,46,14,0.6,0.6734,"[0.521, 0.802]",0.714,0.5,0.688,0.65,0.481,4,10
+GAT text-only,asr_daic_test,46,14,0.6,0.6349,"[0.480, 0.760]",0.714,0.455,0.625,0.643,0.475,4,12
+GCN+GAT hybrid,asr_daic_test,46,14,0.6,0.6157,"[0.470, 0.751]",0.714,0.435,0.594,0.656,0.459,4,13
+EmpathGCN,asr_daic_test,46,14,0.46,0.5893,"[0.435, 0.720]",0.643,0.409,0.594,0.703,0.475,5,13
+GAT-GCN-FeExtr (Empath graph),asr_daic_test,46,14,0.5,0.6538,"[0.504, 0.792]",0.571,0.5,0.75,0.743,0.467,6,8
+GAT-GCN-FeExtr (word graph),asr_daic_test,46,14,0.6,0.6541,"[0.502, 0.781]",0.714,0.476,0.656,0.683,0.477,4,11
