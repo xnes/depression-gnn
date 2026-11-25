@@ -5,8 +5,8 @@ token list, or per-participant row is written to disk.
 
 Cohorts:
     DAIC-WOZ train / dev / test   official AVEC 2017 partitions, manual transcripts
-    E-DAIC                        ASR transcripts; sessions whose ID is in the DAIC-WOZ training
-                                  split are excluded (the rule used in the legacy notebooks)
+    E-DAIC                        ASR transcripts; only participants whose ID appears in no
+                                  DAIC-WOZ split (official E-DAIC train, dev and test)
 """
 from __future__ import annotations
 
@@ -65,9 +65,7 @@ def build_session_table(root: Path) -> pd.DataFrame:
     lexical shift (including ASR errors) between training and evaluation transcripts.
     """
     daic = data.load_daic_labels(root)
-    edaic = data.load_edaic_labels(root)
-    train_ids = set(daic.loc[daic["split"] == "train", "Participant_ID"])
-    edaic = edaic[~edaic["Participant_ID"].isin(train_ids)]
+    edaic = data.external_edaic_labels(daic, data.load_edaic_labels(root))
 
     rows, vocabularies = [], {}
     sources = [(daic, "DAIC-WOZ", data.load_daic_turns), (edaic, "E-DAIC", data.load_edaic_turns)]

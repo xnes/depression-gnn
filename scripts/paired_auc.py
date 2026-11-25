@@ -16,7 +16,7 @@ from src.common.evaluation import bootstrap_auc, paired_bootstrap_auc
 
 MODELS = ["GAT-GCN-FeExtr (Empath graph)", "EmpathGCN", "InductGCN", "GAT text-only",
           "GCN+GAT hybrid", "GAT-GCN-FeExtr (word graph)"]
-COHORTS = ["daic_test", "edaic"]
+COHORTS = ["daic_test", "edaic", "edaic_test"]
 
 
 def main(prob_dir: Path, out_dir: Path, reference: str = MODELS[0]) -> pd.DataFrame:
